@@ -26,14 +26,14 @@ namespace ToDoPlugin {
 
 		public HighlightWordTaggerProvider() {
 
-			File.Create(@"C:\Alexandr\ya_ebal_etot_plugin2.txt");
+			//File.Create(@"C:\Alexandr\ya_ebal_etot_plugin2.txt");
 		}
 
 		public ITagger<T> CreateTagger<T>(ITextView textView, ITextBuffer buffer) where T : ITag {
 
 			//throw new Exception("1322");
 
-			File.Create(@"C:\Alexandr\ya_ebal_etot_plugin.txt");
+			//File.Create(@"C:\Alexandr\ya_ebal_etot_plugin.txt");
 
 			if (textView.TextBuffer != buffer)
 				return null;

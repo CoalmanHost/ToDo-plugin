@@ -38,7 +38,7 @@ namespace ToDoPlugin {
 			this.CurrentWord = null;
 			this.View.Caret.PositionChanged += CaretPositionChanged;
 			this.View.LayoutChanged += ViewLayoutChanged;
-			throw new Exception();
+			//throw new Exception();
 		}
 
 		public IEnumerable<ITagSpan<HighlightWordTag>> GetTags(NormalizedSnapshotSpanCollection spans) {
