@@ -50,6 +50,11 @@
     <Compile Include="HighlightWordTagger.cs" />
     <Compile Include="HighlightWordTaggerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpanParsers\CommentSectionParser.cs" />
+    <Compile Include="SpanParsers\ISpanParser.cs" />
+    <Compile Include="SpanParsers\RegexSpanParser.cs" />
+    <Compile Include="SpanParsers\SpanParserCollection.cs" />
+    <Compile Include="SpanParsers\ToDoParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
