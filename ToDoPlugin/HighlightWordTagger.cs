@@ -41,7 +41,7 @@ namespace ToDoPlugin {
 			//this.View.Caret.PositionChanged += CaretPositionChanged;
 			//this.View.LayoutChanged += ViewLayoutChanged;
 			//throw new Exception();
-			this.SpanParser = new SpanParserCollection { new RegexSpanParser(new Regex(@"TODO\b", RegexOptions.IgnoreCase)) };
+			this.SpanParser = new SpanParserCollection { new CommentSectionParser() };//{ new RegexSpanParser(new Regex(@"TODO\b", RegexOptions.IgnoreCase)) };
 		}
 
 		public IEnumerable<ITagSpan<HighlightWordTag>> GetTags(NormalizedSnapshotSpanCollection spans) {
