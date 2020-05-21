@@ -5,8 +5,8 @@ using Microsoft.VisualStudio.Text.Tagging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using ToDoPlugin.SpanParsers;
 
 namespace ToDoPlugin {
 	internal class HighlightWordTagger : ITagger<HighlightWordTag> {
@@ -29,6 +29,8 @@ namespace ToDoPlugin {
 
 		object updateLock = new object();
 
+		private ISpanParser SpanParser;
+
 		public HighlightWordTagger(ITextView view, ITextBuffer sourceBuffer, ITextSearchService textSearchService, ITextStructureNavigator textStructureNavigator) {
 			this.View = view;
 			this.SourceBuffer = sourceBuffer;
@@ -36,13 +38,14 @@ namespace ToDoPlugin {
 			this.TextStructureNavigator = textStructureNavigator;
 			this.WordSpans = new NormalizedSnapshotSpanCollection();
 			this.CurrentWord = null;
-			this.View.Caret.PositionChanged += CaretPositionChanged;
-			this.View.LayoutChanged += ViewLayoutChanged;
+			//this.View.Caret.PositionChanged += CaretPositionChanged;
+			//this.View.LayoutChanged += ViewLayoutChanged;
 			//throw new Exception();
+			this.SpanParser = new SpanParserCollection { new RegexSpanParser(new Regex(@"TODO\b", RegexOptions.IgnoreCase)) };
 		}
 
 		public IEnumerable<ITagSpan<HighlightWordTag>> GetTags(NormalizedSnapshotSpanCollection spans) {
-			if (CurrentWord == null)
+			/*if (CurrentWord == null)
 				yield break;
 
 			// Hold on to a "snapshot" of the word spans and current word, so that we maintain the same
@@ -69,8 +72,23 @@ namespace ToDoPlugin {
 
 			// Second, yield all the other words in the file 
 			foreach (SnapshotSpan span in NormalizedSnapshotSpanCollection.Overlap(spans, wordSpans)) {
-				yield return new TagSpan<HighlightWordTag>(span, new HighlightWordTag());
+				//span.
+				if (span.GetText() == "TODO") {
+					yield return new TagSpan<HighlightWordTag>(span, new HighlightWordTag());
+				}
+			}*/
+
+			/*foreach (SnapshotSpan span in spans) {
+				if (span.GetText() == "TODO") {
+					yield return new TagSpan<HighlightWordTag>(span, new HighlightWordTag());
+				}
+			}*/
+
+			IEnumerable<ITagSpan<HighlightWordTag>> result = new List<ITagSpan<HighlightWordTag>>();
+			foreach (SnapshotSpan span in spans) {
+				result = result.Union(SpanParser.Parse(span));
 			}
+			return result;
 		}
 
 		private void ViewLayoutChanged(object sender, TextViewLayoutChangedEventArgs e) {
@@ -161,9 +179,7 @@ namespace ToDoPlugin {
 				WordSpans = newSpans;
 				CurrentWord = newCurrentWord;
 
-				var tempEvent = TagsChanged;
-				if (tempEvent != null)
-					tempEvent(this, new SnapshotSpanEventArgs(new SnapshotSpan(SourceBuffer.CurrentSnapshot, 0, SourceBuffer.CurrentSnapshot.Length)));
+				TagsChanged?.Invoke(this, new SnapshotSpanEventArgs(new SnapshotSpan(SourceBuffer.CurrentSnapshot, 0, SourceBuffer.CurrentSnapshot.Length)));
 			}
 		}
 

@@ -6,13 +6,15 @@ using System.ComponentModel.Composition;
 namespace ToDoPlugin {
 
 	[Export(typeof(EditorFormatDefinition))]
-	[Name("MarkerFormatDefinition/HighlightWordFormatDefinition")]
+	[Name(FormatName)]
 	[UserVisible(true)]
 	internal class HighlightWordFormatDefinition : MarkerFormatDefinition {
 
+		public const string FormatName = "MarkerFormatDefinition/HighlightWordFormatDefinition";
+
 		public HighlightWordFormatDefinition() {
-			this.BackgroundColor = Colors.DarkRed;
-			this.ForegroundColor = Colors.Red;
+			this.BackgroundColor = Colors.LimeGreen;
+			this.ForegroundColor = Colors.DarkGreen;
 			this.ZOrder = 5;
 			this.DisplayName = "Highlight Word";
 		}
