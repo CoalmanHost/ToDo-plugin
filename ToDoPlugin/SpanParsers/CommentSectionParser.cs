@@ -12,7 +12,6 @@ namespace ToDoPlugin.SpanParsers {
 		public IEnumerable<ITagSpan<HighlightWordTag>> Parse(SnapshotSpan span) {
 			IEnumerable<ITagSpan<HighlightWordTag>> result = new List<ITagSpan<HighlightWordTag>>();
 			foreach (var commentSpan in GetComments(span)) {
-				//yield return new TagSpan<HighlightWordTag>(commentSpan, new HighlightWordTag());
 				result = result.Union(InnerParser.Parse(commentSpan));
 			}
 			return result;
