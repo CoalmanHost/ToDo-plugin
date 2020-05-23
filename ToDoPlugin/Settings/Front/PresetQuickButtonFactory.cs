@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ToDoPlugin.Settings.Front {
 	internal class PresetQuickButtonFactory : IPresetQuickButtonFactory {
 
-		public PresetQuickButtonFactory(Color backColor, Color textColor) {
+		private readonly Color BackColor;
 
+		private readonly Color TextColor;
+
+		public PresetQuickButtonFactory(Color backColor, Color textColor) {
+			this.BackColor = backColor;
+			this.TextColor = textColor;
 		}
 
 		public Control CreateQuickButton(string caption, object tag, EventHandler callback) {
@@ -22,6 +23,7 @@ namespace ToDoPlugin.Settings.Front {
 			label.Text = caption;
 			label.Location = new Point(12, 17);
 			panel.Tag = tag;
+			panel.BackColor = this.BackColor;
 			return panel;
 		}
 

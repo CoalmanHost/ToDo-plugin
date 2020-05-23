@@ -2,17 +2,25 @@
 using Microsoft.VisualStudio.Text.Tagging;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using ToDoPlugin.Settings;
 
 namespace ToDoPlugin.SpanParsers {
-	internal class CommentSectionParser : ISpanParser {
+	internal sealed class CommentSectionParser : ISpanParser {
 
-		private RegexSpanParser InnerParser = new RegexSpanParser(new Regex(@"TODO\b", RegexOptions.IgnoreCase));
+		public CommentSectionParser() {
+
+		}
+
+		private ISpanParser CreateParserInternal(Preset preset) {
+			return new PresetSpanParser(preset);
+		}
 
 		public IEnumerable<ITagSpan<HighlightWordTag>> Parse(SnapshotSpan span) {
 			IEnumerable<ITagSpan<HighlightWordTag>> result = new List<ITagSpan<HighlightWordTag>>();
 			foreach (var commentSpan in GetComments(span)) {
-				result = result.Union(InnerParser.Parse(commentSpan));
+				foreach (var preset in SettingsContainer.ShownPresets) {
+					result = result.Union(CreateParserInternal(preset).Parse(commentSpan));
+				}
 			}
 			return result;
 		}

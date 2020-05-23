@@ -8,11 +8,21 @@ using System.Windows.Media;
 namespace ToDoPlugin.Settings {
 	internal static class SettingsContainer {
 
-		public static ICollection<HighlightingWordSettings> Presets { get; private set; }
+		public static string CurrentPreset { get; set; }
+
+		public static ICollection<Preset> Presets { get; private set; }
+
+		public static IEnumerable<Preset> ShownPresets => Presets.Where(x => x.IsShown);
+
+		public delegate void OnUpdate();
+
+		public static OnUpdate UpdateSettings;
 
 		static SettingsContainer() {
-			Presets = new List<HighlightingWordSettings>();
-			Presets.Add(new HighlightingWordSettings() { BackgroundColor = Color.FromRgb(0, 255, 0), IsShown = true, Word = "TODO" });
+			Presets = new List<Preset>();
+			Presets.Add(new Preset() { BackgroundColor = Colors.LightGreen, IsShown = true, Word = "TODO" });
+			Presets.Add(new Preset() { BackgroundColor = Colors.LightGreen, IsShown = true, Word = "FIXME" });
+			CurrentPreset = Presets.First().Word;
 		}
 
 	}

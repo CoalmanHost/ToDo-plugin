@@ -26,6 +26,16 @@
 			this.StgsContainer = new System.Windows.Forms.FlowLayoutPanel();
 			this.CloseWindow = new System.Windows.Forms.Button();
 			this.PresetName = new System.Windows.Forms.Label();
+			this.PresetActive = new System.Windows.Forms.CheckBox();
+			this.PresetColor = new System.Windows.Forms.PictureBox();
+			this.PresetChangeColor = new System.Windows.Forms.Button();
+			this.PresetColorSelectDialog = new System.Windows.Forms.ColorDialog();
+			this.LeftBackground = new System.Windows.Forms.Panel();
+			this.RightBackground = new System.Windows.Forms.Panel();
+			this.label1 = new System.Windows.Forms.Label();
+			((System.ComponentModel.ISupportInitialize)(this.PresetColor)).BeginInit();
+			this.LeftBackground.SuspendLayout();
+			this.RightBackground.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// StgsContainer
@@ -41,7 +51,7 @@
 			// 
 			// CloseWindow
 			// 
-			this.CloseWindow.Location = new System.Drawing.Point(686, 408);
+			this.CloseWindow.Location = new System.Drawing.Point(198, 408);
 			this.CloseWindow.Name = "CloseWindow";
 			this.CloseWindow.Size = new System.Drawing.Size(102, 30);
 			this.CloseWindow.TabIndex = 9;
@@ -53,20 +63,85 @@
 			// 
 			this.PresetName.AutoSize = true;
 			this.PresetName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.PresetName.Location = new System.Drawing.Point(293, 13);
+			this.PresetName.Location = new System.Drawing.Point(5, 12);
 			this.PresetName.Name = "PresetName";
 			this.PresetName.Size = new System.Drawing.Size(188, 24);
 			this.PresetName.TabIndex = 10;
 			this.PresetName.Text = "Выберите элемент:";
 			// 
+			// PresetActive
+			// 
+			this.PresetActive.AutoSize = true;
+			this.PresetActive.Location = new System.Drawing.Point(9, 56);
+			this.PresetActive.Name = "PresetActive";
+			this.PresetActive.Size = new System.Drawing.Size(71, 17);
+			this.PresetActive.TabIndex = 11;
+			this.PresetActive.Text = "Включён";
+			this.PresetActive.UseVisualStyleBackColor = true;
+			this.PresetActive.Visible = false;
+			this.PresetActive.CheckedChanged += new System.EventHandler(this.PresetActive_CheckedChanged);
+			// 
+			// PresetColor
+			// 
+			this.PresetColor.Location = new System.Drawing.Point(9, 91);
+			this.PresetColor.Name = "PresetColor";
+			this.PresetColor.Size = new System.Drawing.Size(40, 40);
+			this.PresetColor.TabIndex = 12;
+			this.PresetColor.TabStop = false;
+			// 
+			// PresetChangeColor
+			// 
+			this.PresetChangeColor.Location = new System.Drawing.Point(55, 101);
+			this.PresetChangeColor.Name = "PresetChangeColor";
+			this.PresetChangeColor.Size = new System.Drawing.Size(138, 30);
+			this.PresetChangeColor.TabIndex = 13;
+			this.PresetChangeColor.Text = "Выбрать цвет";
+			this.PresetChangeColor.UseVisualStyleBackColor = true;
+			this.PresetChangeColor.Visible = false;
+			this.PresetChangeColor.Click += new System.EventHandler(this.PresetChangeColor_Click);
+			// 
+			// PresetColorSelectDialog
+			// 
+			this.PresetColorSelectDialog.Color = System.Drawing.Color.LimeGreen;
+			// 
+			// LeftBackground
+			// 
+			this.LeftBackground.Controls.Add(this.StgsContainer);
+			this.LeftBackground.Location = new System.Drawing.Point(0, 0);
+			this.LeftBackground.Name = "LeftBackground";
+			this.LeftBackground.Size = new System.Drawing.Size(291, 454);
+			this.LeftBackground.TabIndex = 14;
+			// 
+			// RightBackground
+			// 
+			this.RightBackground.Controls.Add(this.label1);
+			this.RightBackground.Controls.Add(this.PresetName);
+			this.RightBackground.Controls.Add(this.CloseWindow);
+			this.RightBackground.Controls.Add(this.PresetColor);
+			this.RightBackground.Controls.Add(this.PresetChangeColor);
+			this.RightBackground.Controls.Add(this.PresetActive);
+			this.RightBackground.Location = new System.Drawing.Point(292, 0);
+			this.RightBackground.Name = "RightBackground";
+			this.RightBackground.Size = new System.Drawing.Size(316, 454);
+			this.RightBackground.TabIndex = 15;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label1.Location = new System.Drawing.Point(6, 392);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(294, 13);
+			this.label1.TabIndex = 14;
+			this.label1.Text = "Изменения вступят в силу после перезагрузки проекта";
+			// 
 			// SettingsWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.PresetName);
-			this.Controls.Add(this.CloseWindow);
-			this.Controls.Add(this.StgsContainer);
+			this.ClientSize = new System.Drawing.Size(603, 450);
+			this.Controls.Add(this.LeftBackground);
+			this.Controls.Add(this.RightBackground);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -74,8 +149,13 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "ToDo Highlight: Настройки";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsWindow_FormClosing);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SettingsWindow_FormClosed);
+			((System.ComponentModel.ISupportInitialize)(this.PresetColor)).EndInit();
+			this.LeftBackground.ResumeLayout(false);
+			this.RightBackground.ResumeLayout(false);
+			this.RightBackground.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -83,5 +163,12 @@
 		private System.Windows.Forms.FlowLayoutPanel StgsContainer;
 		private System.Windows.Forms.Button CloseWindow;
 		private System.Windows.Forms.Label PresetName;
+		private System.Windows.Forms.CheckBox PresetActive;
+		private System.Windows.Forms.PictureBox PresetColor;
+		private System.Windows.Forms.Button PresetChangeColor;
+		private System.Windows.Forms.ColorDialog PresetColorSelectDialog;
+		private System.Windows.Forms.Panel LeftBackground;
+		private System.Windows.Forms.Panel RightBackground;
+		private System.Windows.Forms.Label label1;
 	}
 }

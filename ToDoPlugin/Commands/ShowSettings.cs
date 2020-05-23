@@ -86,6 +86,9 @@ namespace ToDoPlugin.Commands {
 				ThreadHelper.ThrowIfNotOnUIThread();
 				try {
 					SettingsWindow = SettingsWindow ?? new SettingsWindow();
+					if (SettingsWindow.IsClosed) {
+						SettingsWindow = new SettingsWindow();
+					}
 					SettingsWindow.Show();
 				}
 				catch (Exception ex) {

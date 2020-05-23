@@ -59,7 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Front\IPresetQuickButtonFactory.cs" />
     <Compile Include="Settings\Front\PresetQuickButtonFactory.cs" />
-    <Compile Include="Settings\HighlightingWordSettings.cs" />
+    <Compile Include="Settings\Preset.cs" />
     <Compile Include="Settings\SettingsContainer.cs" />
     <Compile Include="Settings\SettingsWindow.cs">
       <SubType>Form</SubType>
@@ -68,12 +68,12 @@
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Commands\ShowSettings.cs" />
+    <Compile Include="Settings\Utils.cs" />
+    <Compile Include="SpanParsers\PresetSpanParser.cs" />
     <Compile Include="ToDoHighlightPackage.cs" />
     <Compile Include="SpanParsers\CommentSectionParser.cs" />
     <Compile Include="SpanParsers\ISpanParser.cs" />
-    <Compile Include="SpanParsers\RegexSpanParser.cs" />
     <Compile Include="SpanParsers\SpanParserCollection.cs" />
-    <Compile Include="SpanParsers\ToDoParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />

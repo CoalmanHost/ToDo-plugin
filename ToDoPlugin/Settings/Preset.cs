@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace ToDoPlugin.Settings {
-	internal class HighlightingWordSettings {
+	internal class Preset {
 
 		public string Word { get; set; }
 
