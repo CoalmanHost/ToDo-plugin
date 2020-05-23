@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Tagging;
+using Microsoft.VisualStudio.Text.Classification;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ToDoPlugin.Classifications;
 using ToDoPlugin.Settings;
 
 namespace ToDoPlugin.SpanParsers {
@@ -11,12 +12,15 @@ namespace ToDoPlugin.SpanParsers {
 
 		private readonly Preset Preset;
 
-		public PresetSpanParser(Preset preset) {
+		private readonly IClassificationTypeProvider ClassificationTypeProvider;
+
+		public PresetSpanParser(Preset preset, IClassificationTypeProvider classificationTypeProvider) {
 			Checker = new Regex(preset.Word + @"\b", RegexOptions.IgnoreCase);
 			this.Preset = preset;
+			this.ClassificationTypeProvider = classificationTypeProvider;
 		}
 
-		public IEnumerable<ITagSpan<HighlightWordTag>> Parse(SnapshotSpan span) {
+		IEnumerable<ClassificationSpan> ISpanParser.Parse(SnapshotSpan span) {
 			var matches = Checker.Matches(span.GetText());
 			if (matches.Count == 0) {
 				yield break;
@@ -27,7 +31,9 @@ namespace ToDoPlugin.SpanParsers {
 				foreach (Match match in matches) {
 					Span spanPart = new Span(span.Start.Position + match.Index, match.Length);
 					SnapshotSpan target = new SnapshotSpan(span.Snapshot, spanPart);
-					yield return new TagSpan<HighlightWordTag>(target, new HighlightWordTag());
+					IClassificationType type = ClassificationTypeProvider.GetClassification(Preset);
+					//ClassificationTypeProvider.UpdateClassification(Preset);
+					yield return new ClassificationSpan(target, type);
 				}
 			}
 		}

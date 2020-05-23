@@ -85,9 +85,9 @@ namespace ToDoPlugin.Commands {
 			lock (Sync) {
 				ThreadHelper.ThrowIfNotOnUIThread();
 				try {
-					SettingsWindow = SettingsWindow ?? new SettingsWindow();
+					SettingsWindow = SettingsWindow ?? new SettingsWindow(HighlightClassifier.ClassificationTypeProvider);
 					if (SettingsWindow.IsClosed) {
-						SettingsWindow = new SettingsWindow();
+						SettingsWindow = new SettingsWindow(HighlightClassifier.ClassificationTypeProvider);
 					}
 					SettingsWindow.Show();
 				}

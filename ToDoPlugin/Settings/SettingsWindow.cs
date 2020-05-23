@@ -2,10 +2,11 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ToDoPlugin.Classifications;
 using ToDoPlugin.Settings.Front;
 
 namespace ToDoPlugin.Settings {
-	public partial class SettingsWindow : Form {
+	internal partial class SettingsWindow : Form {
 
 		private readonly IPresetQuickButtonFactory ButtonFactory;
 
@@ -15,8 +16,11 @@ namespace ToDoPlugin.Settings {
 
 		public bool IsClosed { get; private set; }
 
-		public SettingsWindow() {
+		private readonly IClassificationTypeProvider ClassificationTypeProvider;
+
+		public SettingsWindow(IClassificationTypeProvider classificationTypeProvider) {
 			InitializeComponent();
+			this.ClassificationTypeProvider = classificationTypeProvider;
 			//this.BackColor = VSColorTheme.GetThemedColor(EnvironmentColors.BrandedUIFillBrushKey);
 			LeftBackground.BackColor = VSColorTheme.GetThemedColor(EnvironmentColors.BrandedUIFillBrushKey);
 			RightBackground.BackColor = VSColorTheme.GetThemedColor(EnvironmentColors.ToolboxBackgroundBrushKey);
@@ -55,7 +59,6 @@ namespace ToDoPlugin.Settings {
 				return;
 			}
 			SelectedPreset.IsShown = PresetActive.Checked;
-			SettingsContainer.UpdateSettings();
 		}
 
 		private void PresetChangeColor_Click(object sender, EventArgs e) {
@@ -65,7 +68,7 @@ namespace ToDoPlugin.Settings {
 			if (PresetColorSelectDialog.ShowDialog() == DialogResult.OK) {
 				SelectedPreset.BackgroundColor = PresetColorSelectDialog.Color.ToWinColor();
 				PresetColorPalette.FillRectangle(new SolidBrush(PresetColorSelectDialog.Color), new Rectangle(0, 0, PresetColor.Width, PresetColor.Height));
-				SettingsContainer.UpdateSettings();
+				ClassificationTypeProvider.UpdateClassification(SelectedPreset);
 			}
 		}
 

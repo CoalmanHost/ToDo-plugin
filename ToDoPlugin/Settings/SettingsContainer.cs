@@ -14,14 +14,10 @@ namespace ToDoPlugin.Settings {
 
 		public static IEnumerable<Preset> ShownPresets => Presets.Where(x => x.IsShown);
 
-		public delegate void OnUpdate();
-
-		public static OnUpdate UpdateSettings;
-
 		static SettingsContainer() {
 			Presets = new List<Preset>();
 			Presets.Add(new Preset() { BackgroundColor = Colors.LightGreen, IsShown = true, Word = "TODO" });
-			Presets.Add(new Preset() { BackgroundColor = Colors.LightGreen, IsShown = true, Word = "FIXME" });
+			Presets.Add(new Preset() { BackgroundColor = Colors.DarkCyan, IsShown = true, Word = "FIXME" });
 			CurrentPreset = Presets.First().Word;
 		}
 

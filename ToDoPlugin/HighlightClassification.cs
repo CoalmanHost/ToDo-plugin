@@ -8,27 +8,25 @@ using System.Linq;
 namespace ToDoPlugin {
 
 	[Export(typeof(EditorFormatDefinition))]
+	[ClassificationType(ClassificationTypeNames = FormatName)]
 	[Name(FormatName)]
 	[UserVisible(true)]
-	internal class HighlightWordFormatDefinition : MarkerFormatDefinition {
+	internal class HighlightClassification : ClassificationFormatDefinition {
 
-		public const string FormatName = "MarkerFormatDefinition/HighlightWordFormatDefinition";
+		public const string FormatName = "ClassificationFormatDefinition/HighlightClassification";
 
 		private readonly string Id;
 
-
-		public HighlightWordFormatDefinition() {
+		public HighlightClassification() {
 			//if (SettingsContainer.CurrentPreset != null) {
 			this.Id = SettingsContainer.CurrentPreset;
 			this.BackgroundColor = SettingsContainer.Presets.Where(x => x.Word == Id).First().BackgroundColor;
-			SettingsContainer.UpdateSettings += UpdatedSettings;
 			/*} else {
 				System.Console.WriteLine("PReset is null");
 			}*/
 			//this.ForegroundColor = Colors.DarkGreen;
 			BackgroundCustomizable = true;
 			ForegroundCustomizable = true;
-			this.ZOrder = 5;
 			this.DisplayName = "Highlight Word";
 		}
 
