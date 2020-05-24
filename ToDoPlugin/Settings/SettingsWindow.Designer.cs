@@ -31,7 +31,11 @@
 			this.PresetChangeColor = new System.Windows.Forms.Button();
 			this.PresetColorSelectDialog = new System.Windows.Forms.ColorDialog();
 			this.LeftBackground = new System.Windows.Forms.Panel();
+			this.CreateNewPresetButton = new System.Windows.Forms.Button();
 			this.RightBackground = new System.Windows.Forms.Panel();
+			this.SavePresetNameButton = new System.Windows.Forms.Button();
+			this.PresetNameBox = new System.Windows.Forms.TextBox();
+			this.PresetNameChangeButton = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.PresetColor)).BeginInit();
 			this.LeftBackground.SuspendLayout();
@@ -45,7 +49,7 @@
 			this.StgsContainer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.StgsContainer.Location = new System.Drawing.Point(12, 12);
 			this.StgsContainer.Name = "StgsContainer";
-			this.StgsContainer.Size = new System.Drawing.Size(274, 426);
+			this.StgsContainer.Size = new System.Drawing.Size(274, 405);
 			this.StgsContainer.TabIndex = 8;
 			this.StgsContainer.WrapContents = false;
 			// 
@@ -72,7 +76,7 @@
 			// PresetActive
 			// 
 			this.PresetActive.AutoSize = true;
-			this.PresetActive.Location = new System.Drawing.Point(9, 56);
+			this.PresetActive.Location = new System.Drawing.Point(9, 71);
 			this.PresetActive.Name = "PresetActive";
 			this.PresetActive.Size = new System.Drawing.Size(71, 17);
 			this.PresetActive.TabIndex = 11;
@@ -83,7 +87,7 @@
 			// 
 			// PresetColor
 			// 
-			this.PresetColor.Location = new System.Drawing.Point(9, 91);
+			this.PresetColor.Location = new System.Drawing.Point(9, 106);
 			this.PresetColor.Name = "PresetColor";
 			this.PresetColor.Size = new System.Drawing.Size(40, 40);
 			this.PresetColor.TabIndex = 12;
@@ -91,7 +95,7 @@
 			// 
 			// PresetChangeColor
 			// 
-			this.PresetChangeColor.Location = new System.Drawing.Point(55, 101);
+			this.PresetChangeColor.Location = new System.Drawing.Point(55, 116);
 			this.PresetChangeColor.Name = "PresetChangeColor";
 			this.PresetChangeColor.Size = new System.Drawing.Size(138, 30);
 			this.PresetChangeColor.TabIndex = 13;
@@ -106,14 +110,29 @@
 			// 
 			// LeftBackground
 			// 
+			this.LeftBackground.Controls.Add(this.CreateNewPresetButton);
 			this.LeftBackground.Controls.Add(this.StgsContainer);
 			this.LeftBackground.Location = new System.Drawing.Point(0, 0);
 			this.LeftBackground.Name = "LeftBackground";
 			this.LeftBackground.Size = new System.Drawing.Size(291, 454);
 			this.LeftBackground.TabIndex = 14;
 			// 
+			// CreateNewPresetButton
+			// 
+			this.CreateNewPresetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.CreateNewPresetButton.Location = new System.Drawing.Point(12, 423);
+			this.CreateNewPresetButton.Name = "CreateNewPresetButton";
+			this.CreateNewPresetButton.Size = new System.Drawing.Size(25, 25);
+			this.CreateNewPresetButton.TabIndex = 9;
+			this.CreateNewPresetButton.Text = "+";
+			this.CreateNewPresetButton.UseVisualStyleBackColor = true;
+			this.CreateNewPresetButton.Click += new System.EventHandler(this.CreateNewPresetButton_Click);
+			// 
 			// RightBackground
 			// 
+			this.RightBackground.Controls.Add(this.SavePresetNameButton);
+			this.RightBackground.Controls.Add(this.PresetNameBox);
+			this.RightBackground.Controls.Add(this.PresetNameChangeButton);
 			this.RightBackground.Controls.Add(this.label1);
 			this.RightBackground.Controls.Add(this.PresetName);
 			this.RightBackground.Controls.Add(this.CloseWindow);
@@ -125,15 +144,46 @@
 			this.RightBackground.Size = new System.Drawing.Size(316, 454);
 			this.RightBackground.TabIndex = 15;
 			// 
+			// SavePresetNameButton
+			// 
+			this.SavePresetNameButton.Location = new System.Drawing.Point(199, 6);
+			this.SavePresetNameButton.Name = "SavePresetNameButton";
+			this.SavePresetNameButton.Size = new System.Drawing.Size(101, 30);
+			this.SavePresetNameButton.TabIndex = 17;
+			this.SavePresetNameButton.Text = "Сохранить";
+			this.SavePresetNameButton.UseVisualStyleBackColor = true;
+			this.SavePresetNameButton.Visible = false;
+			this.SavePresetNameButton.Click += new System.EventHandler(this.SavePresetNameButton_Click);
+			// 
+			// PresetNameBox
+			// 
+			this.PresetNameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.PresetNameBox.Location = new System.Drawing.Point(9, 10);
+			this.PresetNameBox.Name = "PresetNameBox";
+			this.PresetNameBox.Size = new System.Drawing.Size(184, 26);
+			this.PresetNameBox.TabIndex = 16;
+			this.PresetNameBox.Visible = false;
+			// 
+			// PresetNameChangeButton
+			// 
+			this.PresetNameChangeButton.Location = new System.Drawing.Point(199, 6);
+			this.PresetNameChangeButton.Name = "PresetNameChangeButton";
+			this.PresetNameChangeButton.Size = new System.Drawing.Size(101, 30);
+			this.PresetNameChangeButton.TabIndex = 15;
+			this.PresetNameChangeButton.Text = "Изменить";
+			this.PresetNameChangeButton.UseVisualStyleBackColor = true;
+			this.PresetNameChangeButton.Visible = false;
+			this.PresetNameChangeButton.Click += new System.EventHandler(this.PresetNameChangeButton_Click);
+			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label1.Location = new System.Drawing.Point(6, 392);
+			this.label1.Location = new System.Drawing.Point(62, 379);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(294, 13);
+			this.label1.Size = new System.Drawing.Size(238, 26);
 			this.label1.TabIndex = 14;
-			this.label1.Text = "Изменения вступят в силу после перезагрузки проекта";
+			this.label1.Text = "Некоторые изменения вступят в силу после \r\nперезагрузки проекта";
 			// 
 			// SettingsWindow
 			// 
@@ -170,5 +220,9 @@
 		private System.Windows.Forms.Panel LeftBackground;
 		private System.Windows.Forms.Panel RightBackground;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Button CreateNewPresetButton;
+		private System.Windows.Forms.Button PresetNameChangeButton;
+		private System.Windows.Forms.TextBox PresetNameBox;
+		private System.Windows.Forms.Button SavePresetNameButton;
 	}
 }

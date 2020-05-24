@@ -54,7 +54,6 @@
     <Compile Include="Classifications\DefaultClassificationTypeProvider.cs" />
     <Compile Include="Classifications\IClassificationTypeProvider.cs" />
     <Compile Include="Commands\ExportTags.cs" />
-    <Compile Include="HighlightClassification.cs" />
     <Compile Include="HighlightWordTag.cs" />
     <Compile Include="HighlightClassifier.cs" />
     <Compile Include="HighlightClassifierProvider.cs" />
@@ -62,6 +61,8 @@
     <Compile Include="Settings\Front\IPresetQuickButtonFactory.cs" />
     <Compile Include="Settings\Front\PresetQuickButtonFactory.cs" />
     <Compile Include="Settings\Preset.cs" />
+    <Compile Include="Settings\Savers\ISettingsSaver.cs" />
+    <Compile Include="Settings\Savers\JsonSettingsSaver.cs" />
     <Compile Include="Settings\SettingsContainer.cs" />
     <Compile Include="Settings\SettingsWindow.cs">
       <SubType>Form</SubType>
@@ -72,7 +73,6 @@
     <Compile Include="Commands\ShowSettings.cs" />
     <Compile Include="Settings\Utils.cs" />
     <Compile Include="SpanParsers\PresetSpanParser.cs" />
-    <Compile Include="SpanParsers\ToDoParser.cs" />
     <Compile Include="ToDoHighlightPackage.cs" />
     <Compile Include="SpanParsers\CommentSectionParser.cs" />
     <Compile Include="SpanParsers\ISpanParser.cs" />
@@ -98,6 +98,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.204" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.5.2047" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Settings\SettingsWindow.resx">

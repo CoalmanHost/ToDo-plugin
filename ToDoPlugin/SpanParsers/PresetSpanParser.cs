@@ -25,16 +25,11 @@ namespace ToDoPlugin.SpanParsers {
 			if (matches.Count == 0) {
 				yield break;
 			}
-			SettingsContainer.CurrentPreset = this.Preset.Word;
-			lock (SettingsContainer.CurrentPreset) {
-				SettingsContainer.CurrentPreset = this.Preset.Word;
-				foreach (Match match in matches) {
-					Span spanPart = new Span(span.Start.Position + match.Index, match.Length);
-					SnapshotSpan target = new SnapshotSpan(span.Snapshot, spanPart);
-					IClassificationType type = ClassificationTypeProvider.GetClassification(Preset);
-					//ClassificationTypeProvider.UpdateClassification(Preset);
-					yield return new ClassificationSpan(target, type);
-				}
+			foreach (Match match in matches) {
+				Span spanPart = new Span(span.Start.Position + match.Index, match.Length);
+				SnapshotSpan target = new SnapshotSpan(span.Snapshot, spanPart);
+				IClassificationType type = ClassificationTypeProvider.GetClassification(Preset);
+				yield return new ClassificationSpan(target, type);
 			}
 		}
 	}

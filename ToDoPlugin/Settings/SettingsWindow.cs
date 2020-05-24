@@ -25,10 +25,15 @@ namespace ToDoPlugin.Settings {
 			LeftBackground.BackColor = VSColorTheme.GetThemedColor(EnvironmentColors.BrandedUIFillBrushKey);
 			RightBackground.BackColor = VSColorTheme.GetThemedColor(EnvironmentColors.ToolboxBackgroundBrushKey);
 			ButtonFactory = new PresetQuickButtonFactory(RightBackground.BackColor, Color.White);
+			RebuildPresetsContainer();
+			PresetColorPalette = PresetColor.CreateGraphics();
+		}
+
+		private void RebuildPresetsContainer() {
+			StgsContainer.Controls.Clear();
 			foreach (var preset in SettingsContainer.Presets) {
 				StgsContainer.Controls.Add(ButtonFactory.CreateQuickButton(preset.Word, preset, PresetClick));
 			}
-			PresetColorPalette = PresetColor.CreateGraphics();
 		}
 
 		private void CloseWindow_Click(object sender, EventArgs e) {
@@ -44,6 +49,7 @@ namespace ToDoPlugin.Settings {
 			if (preset is null) {
 				return;
 			}
+			SelectedPreset = preset;
 			PresetName.Text = preset.Word;
 			PresetActive.Checked = preset.IsShown;
 			PresetName.Visible = true;
@@ -51,7 +57,9 @@ namespace ToDoPlugin.Settings {
 			PresetChangeColor.Visible = true;
 			PresetColor.Visible = true;
 			PresetColorPalette.FillRectangle(new SolidBrush(preset.BackgroundColor.ToDrwColor()), new Rectangle(0, 0, PresetColor.Width, PresetColor.Height));
-			SelectedPreset = preset;
+			PresetNameChangeButton.Visible = true;
+			PresetNameBox.Visible = false;
+			SavePresetNameButton.Visible = false;
 		}
 
 		private void PresetActive_CheckedChanged(object sender, EventArgs e) {
@@ -59,6 +67,7 @@ namespace ToDoPlugin.Settings {
 				return;
 			}
 			SelectedPreset.IsShown = PresetActive.Checked;
+			SettingsContainer.SaveSettings();
 		}
 
 		private void PresetChangeColor_Click(object sender, EventArgs e) {
@@ -69,6 +78,7 @@ namespace ToDoPlugin.Settings {
 				SelectedPreset.BackgroundColor = PresetColorSelectDialog.Color.ToWinColor();
 				PresetColorPalette.FillRectangle(new SolidBrush(PresetColorSelectDialog.Color), new Rectangle(0, 0, PresetColor.Width, PresetColor.Height));
 				ClassificationTypeProvider.UpdateClassification(SelectedPreset);
+				SettingsContainer.SaveSettings();
 			}
 		}
 
@@ -78,6 +88,30 @@ namespace ToDoPlugin.Settings {
 
 		private void SettingsWindow_FormClosed(object sender, FormClosedEventArgs e) {
 			IsClosed = true;
+		}
+
+		private void CreateNewPresetButton_Click(object sender, EventArgs e) {
+			Preset preset = new Preset() { BackgroundColor = System.Windows.Media.Colors.LightGray, IsShown = false, Word = "Новый тэг" };
+			SettingsContainer.Presets.Add(preset);
+			RebuildPresetsContainer();
+			ShowPresetInfo(preset);
+		}
+
+		private void PresetNameChangeButton_Click(object sender, EventArgs e) {
+			PresetNameBox.Visible = true;
+			PresetNameChangeButton.Visible = false;
+			PresetNameBox.Text = SelectedPreset?.Word;
+			SavePresetNameButton.Visible = true;
+		}
+
+		private void SavePresetNameButton_Click(object sender, EventArgs e) {
+			PresetNameBox.Visible = false;
+			PresetNameChangeButton.Visible = true;
+			SelectedPreset.Word = PresetNameBox.Text;
+			PresetName.Text = SelectedPreset.Word;
+			SavePresetNameButton.Visible = false;
+			RebuildPresetsContainer();
+			SettingsContainer.SaveSettings();
 		}
 	}
 }
