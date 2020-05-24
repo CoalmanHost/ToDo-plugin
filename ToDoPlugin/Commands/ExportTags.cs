@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Globalization;
-using EnvDTE;
-using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using ToDoPlugin.Commands.TextFiles;
+using ToDoPlugin.Commands.TextFiles.Exporters;
 using Task = System.Threading.Tasks.Task;
 
 namespace ToDoPlugin.Commands {
@@ -30,6 +26,8 @@ namespace ToDoPlugin.Commands {
 		private readonly AsyncPackage package;
 
 		private static ITextFilesProvider TextFilesProvider;
+
+		private static IExplorter Exporter;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExportTags"/> class.
@@ -73,6 +71,7 @@ namespace ToDoPlugin.Commands {
 			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
 			TextFilesProvider = new DefaultTextFilesProvider();
+			Exporter = new DefaultExporter();
 
 			OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
 			Instance = new ExportTags(package, commandService);
@@ -87,20 +86,12 @@ namespace ToDoPlugin.Commands {
 		/// <param name="e">Event args.</param>
 		private void Execute(object sender, EventArgs e) {
 			ThreadHelper.ThrowIfNotOnUIThread();
-			string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-			string title = "ExportTags";
 
+			var files = TextFilesProvider.GetTextFiles();
 
-			string files = string.Join(", ", TextFilesProvider.GetTextFiles());
+			string txtFile = Exporter.CreateExportFile(files);
+			System.Diagnostics.Process.Start(txtFile);
 
-			// Show a message box to prove we were here
-			VsShellUtilities.ShowMessageBox(
-				this.package,
-				files,
-				title,
-				OLEMSGICON.OLEMSGICON_INFO,
-				OLEMSGBUTTON.OLEMSGBUTTON_OK,
-				OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 		}
 
 
