@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
+using EnvDTE;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using ToDoPlugin.Commands.TextFiles;
 using Task = System.Threading.Tasks.Task;
 
 namespace ToDoPlugin.Commands {
@@ -25,6 +29,8 @@ namespace ToDoPlugin.Commands {
 		/// </summary>
 		private readonly AsyncPackage package;
 
+		private static ITextFilesProvider TextFilesProvider;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExportTags"/> class.
 		/// Adds our command handlers for menu (commands must exist in the command table file)
@@ -37,7 +43,7 @@ namespace ToDoPlugin.Commands {
 
 			var menuCommandID = new CommandID(CommandSet, CommandId);
 			var menuItem = new MenuCommand(this.Execute, menuCommandID);
-			//commandService.AddCommand(menuItem);
+			commandService.AddCommand(menuItem);
 		}
 
 		/// <summary>
@@ -66,6 +72,8 @@ namespace ToDoPlugin.Commands {
 			// the UI thread.
 			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
+			TextFilesProvider = new DefaultTextFilesProvider();
+
 			OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
 			Instance = new ExportTags(package, commandService);
 		}
@@ -82,14 +90,19 @@ namespace ToDoPlugin.Commands {
 			string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
 			string title = "ExportTags";
 
+
+			string files = string.Join(", ", TextFilesProvider.GetTextFiles());
+
 			// Show a message box to prove we were here
 			VsShellUtilities.ShowMessageBox(
 				this.package,
-				message,
+				files,
 				title,
 				OLEMSGICON.OLEMSGICON_INFO,
 				OLEMSGBUTTON.OLEMSGBUTTON_OK,
 				OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 		}
+
+
 	}
 }

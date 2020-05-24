@@ -54,6 +54,8 @@
     <Compile Include="Classifications\DefaultClassificationTypeProvider.cs" />
     <Compile Include="Classifications\IClassificationTypeProvider.cs" />
     <Compile Include="Commands\ExportTags.cs" />
+    <Compile Include="Commands\TextFiles\DefaultTextFilesProvider.cs" />
+    <Compile Include="Commands\TextFiles\ITextFilesProvider.cs" />
     <Compile Include="HighlightWordTag.cs" />
     <Compile Include="HighlightClassifier.cs" />
     <Compile Include="HighlightClassifierProvider.cs" />
