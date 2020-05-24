@@ -36,7 +36,7 @@
 			this.SavePresetNameButton = new System.Windows.Forms.Button();
 			this.PresetNameBox = new System.Windows.Forms.TextBox();
 			this.PresetNameChangeButton = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
+			this.MessageLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.PresetColor)).BeginInit();
 			this.LeftBackground.SuspendLayout();
 			this.RightBackground.SuspendLayout();
@@ -133,7 +133,7 @@
 			this.RightBackground.Controls.Add(this.SavePresetNameButton);
 			this.RightBackground.Controls.Add(this.PresetNameBox);
 			this.RightBackground.Controls.Add(this.PresetNameChangeButton);
-			this.RightBackground.Controls.Add(this.label1);
+			this.RightBackground.Controls.Add(this.MessageLabel);
 			this.RightBackground.Controls.Add(this.PresetName);
 			this.RightBackground.Controls.Add(this.CloseWindow);
 			this.RightBackground.Controls.Add(this.PresetColor);
@@ -158,7 +158,7 @@
 			// PresetNameBox
 			// 
 			this.PresetNameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.PresetNameBox.Location = new System.Drawing.Point(9, 10);
+			this.PresetNameBox.Location = new System.Drawing.Point(9, 12);
 			this.PresetNameBox.Name = "PresetNameBox";
 			this.PresetNameBox.Size = new System.Drawing.Size(184, 26);
 			this.PresetNameBox.TabIndex = 16;
@@ -175,15 +175,15 @@
 			this.PresetNameChangeButton.Visible = false;
 			this.PresetNameChangeButton.Click += new System.EventHandler(this.PresetNameChangeButton_Click);
 			// 
-			// label1
+			// MessageLabel
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label1.Location = new System.Drawing.Point(62, 379);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(238, 26);
-			this.label1.TabIndex = 14;
-			this.label1.Text = "Некоторые изменения вступят в силу после \r\nперезагрузки проекта";
+			this.MessageLabel.AutoSize = true;
+			this.MessageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.MessageLabel.Location = new System.Drawing.Point(62, 379);
+			this.MessageLabel.Name = "MessageLabel";
+			this.MessageLabel.Size = new System.Drawing.Size(238, 26);
+			this.MessageLabel.TabIndex = 14;
+			this.MessageLabel.Text = "Некоторые изменения вступят в силу после \r\nперезагрузки проекта";
 			// 
 			// SettingsWindow
 			// 
@@ -219,7 +219,7 @@
 		private System.Windows.Forms.ColorDialog PresetColorSelectDialog;
 		private System.Windows.Forms.Panel LeftBackground;
 		private System.Windows.Forms.Panel RightBackground;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label MessageLabel;
 		private System.Windows.Forms.Button CreateNewPresetButton;
 		private System.Windows.Forms.Button PresetNameChangeButton;
 		private System.Windows.Forms.TextBox PresetNameBox;

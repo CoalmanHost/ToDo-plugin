@@ -24,7 +24,11 @@ namespace ToDoPlugin.Settings {
 			//this.BackColor = VSColorTheme.GetThemedColor(EnvironmentColors.BrandedUIFillBrushKey);
 			LeftBackground.BackColor = VSColorTheme.GetThemedColor(EnvironmentColors.BrandedUIFillBrushKey);
 			RightBackground.BackColor = VSColorTheme.GetThemedColor(EnvironmentColors.ToolboxBackgroundBrushKey);
-			ButtonFactory = new PresetQuickButtonFactory(RightBackground.BackColor, Color.White);
+			Color textColor = VSColorTheme.GetThemedColor(EnvironmentColors.BrandedUITitleBrushKey);
+			MessageLabel.ForeColor = textColor;
+			PresetName.ForeColor = textColor;
+			PresetActive.ForeColor = textColor;
+			ButtonFactory = new PresetQuickButtonFactory(RightBackground.BackColor, textColor);
 			RebuildPresetsContainer();
 			PresetColorPalette = PresetColor.CreateGraphics();
 		}
