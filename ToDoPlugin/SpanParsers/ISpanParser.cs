@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Tagging;
+using Microsoft.VisualStudio.Text.Classification;
 using System.Collections.Generic;
 
 namespace ToDoPlugin.SpanParsers {
 
 	internal interface ISpanParser {
 
-		IEnumerable<ITagSpan<HighlightWordTag>> Parse(SnapshotSpan span);
+		IEnumerable<ClassificationSpan> Parse(SnapshotSpan span);
 
 	}
 }

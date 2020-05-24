@@ -1,19 +1,29 @@
 ﻿using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Tagging;
+using Microsoft.VisualStudio.Text.Classification;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using ToDoPlugin.Classifications;
+using ToDoPlugin.Settings;
 
 namespace ToDoPlugin.SpanParsers {
-	internal class CommentSectionParser : ISpanParser {
+	internal sealed class CommentSectionParser : ISpanParser {
 
-		private RegexSpanParser InnerParser = new RegexSpanParser(new Regex(@"TODO\b", RegexOptions.IgnoreCase));
+		private readonly IClassificationTypeProvider ClassificationTypeProvider;
 
-		public IEnumerable<ITagSpan<HighlightWordTag>> Parse(SnapshotSpan span) {
-			IEnumerable<ITagSpan<HighlightWordTag>> result = new List<ITagSpan<HighlightWordTag>>();
+		public CommentSectionParser(IClassificationTypeProvider classificationTypeProvider) {
+			this.ClassificationTypeProvider = classificationTypeProvider;
+		}
+
+		private ISpanParser CreateParserInternal(Preset preset) {
+			return new PresetSpanParser(preset, ClassificationTypeProvider);
+		}
+
+		public IEnumerable<ClassificationSpan> Parse(SnapshotSpan span) {
+			IEnumerable<ClassificationSpan> result = new List<ClassificationSpan>();
 			foreach (var commentSpan in GetComments(span)) {
-				//yield return new TagSpan<HighlightWordTag>(commentSpan, new HighlightWordTag());
-				result = result.Union(InnerParser.Parse(commentSpan));
+				foreach (var preset in SettingsContainer.ShownPresets) {
+					result = result.Union(CreateParserInternal(preset).Parse(commentSpan));
+				}
 			}
 			return result;
 		}
@@ -86,5 +96,6 @@ namespace ToDoPlugin.SpanParsers {
 				}*/
 			}
 		}
+
 	}
 }

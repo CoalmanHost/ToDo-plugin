@@ -4,7 +4,7 @@ namespace ToDoPlugin {
 	internal class HighlightWordTag : TextMarkerTag {
 
 		public HighlightWordTag() : base("MarkerFormatDefinition/HighlightWordFormatDefinition") {
-			
+			//this.
 		}
 
 	}
