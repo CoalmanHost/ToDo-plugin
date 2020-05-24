@@ -1,2 +1,7 @@
 language: csharp
 solution: ToDoPlugin.sln
+os: windows
+mono: none
+dotnet: 4.7.2
+script:
+ - dotnet restore

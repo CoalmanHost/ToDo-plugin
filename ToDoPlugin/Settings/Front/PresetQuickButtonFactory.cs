@@ -21,6 +21,7 @@ namespace ToDoPlugin.Settings.Front {
 			Label label = new Label();
 			panel.Controls.Add(label);
 			label.Text = caption;
+			label.ForeColor = this.TextColor;
 			label.Location = new Point(12, 17);
 			panel.Tag = tag;
 			panel.BackColor = this.BackColor;
