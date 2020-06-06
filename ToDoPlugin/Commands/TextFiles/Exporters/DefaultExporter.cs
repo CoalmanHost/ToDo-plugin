@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using ToDoPlugin.Settings;
 
 namespace ToDoPlugin.Commands.TextFiles.Exporters {
-	internal class DefaultExporter : IExplorter {
+	internal class DefaultExporter : IExporter {
 
 		public string CreateExportFile(IEnumerable<TextFileInfo> textFiles) {
 			StringBuilder builder = new StringBuilder();

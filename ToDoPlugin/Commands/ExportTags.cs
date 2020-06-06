@@ -1,6 +1,8 @@
 ﻿using System;
-using System.ComponentModel.Design;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using System.ComponentModel.Design;
+using System.IO;
 using ToDoPlugin.Commands.TextFiles;
 using ToDoPlugin.Commands.TextFiles.Exporters;
 using Task = System.Threading.Tasks.Task;
@@ -27,7 +29,7 @@ namespace ToDoPlugin.Commands {
 
 		private static ITextFilesProvider TextFilesProvider;
 
-		private static IExplorter Exporter;
+		private static IExporter Exporter;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExportTags"/> class.
@@ -71,7 +73,8 @@ namespace ToDoPlugin.Commands {
 			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
 			TextFilesProvider = new DefaultTextFilesProvider();
-			Exporter = new DefaultExporter();
+			Exporter = new JsonExporter();
+			// THINK of using custom configurable exporter
 
 			OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
 			Instance = new ExportTags(package, commandService);
@@ -89,9 +92,18 @@ namespace ToDoPlugin.Commands {
 
 			var files = TextFilesProvider.GetTextFiles();
 
-			string txtFile = Exporter.CreateExportFile(files);
-			System.Diagnostics.Process.Start(txtFile);
-
+			string file = Exporter.CreateExportFile(files);
+			IVsSolution solution = (IVsSolution)Package.GetGlobalService(typeof(IVsSolution));
+			object savePath = "";
+			solution.GetProperty(-8000, out savePath);
+			string finalPath = (string)savePath + "export";
+            if (File.Exists(finalPath))
+            {
+				File.Delete(finalPath);
+            }
+			File.Copy(file, finalPath);
+			System.Diagnostics.Process.Start("devenv.exe", $"/edit {finalPath}");
+			// TODO smth for opening JSON via VIsual Studio...
 		}
 
 

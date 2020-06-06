@@ -55,10 +55,11 @@
     <Compile Include="Classifications\IClassificationTypeProvider.cs" />
     <Compile Include="Commands\ExportTags.cs" />
     <Compile Include="Commands\TextFiles\DefaultTextFilesProvider.cs" />
+    <Compile Include="Commands\TextFiles\Exporters\JsonExporter.cs" />
     <Compile Include="Commands\TextFiles\ITextFilesProvider.cs" />
     <Compile Include="Commands\TextFiles\Exporters\DefaultExporter.cs" />
     <Compile Include="Commands\TextFiles\TextFileInfo.cs" />
-    <Compile Include="Commands\TextFiles\Exporters\IExplorter.cs" />
+    <Compile Include="Commands\TextFiles\Exporters\IExporter.cs" />
     <Compile Include="HighlightClassifier.cs" />
     <Compile Include="HighlightClassifierProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
