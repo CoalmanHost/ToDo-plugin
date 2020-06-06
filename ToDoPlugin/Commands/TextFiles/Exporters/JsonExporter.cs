@@ -39,7 +39,7 @@ namespace ToDoPlugin.Commands.TextFiles.Exporters
 					}
 				}
 			}
-			string output = (JsonConvert.SerializeObject(saveList.ToArray()));
+			string output = (JsonConvert.SerializeObject(saveList.ToArray(), Formatting.Indented));
 			string filePath = Path.GetTempFileName();
 			File.WriteAllText(filePath, output);
 			return filePath;
