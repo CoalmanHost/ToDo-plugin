@@ -117,5 +117,15 @@ namespace ToDoPlugin.Settings {
 			RebuildPresetsContainer();
 			SettingsContainer.SaveSettings();
 		}
-	}
+
+        private void DeletePresetButton_Click(object sender, EventArgs e)
+        {
+            if (SettingsContainer.Presets.Remove(SelectedPreset))
+            {
+				SelectedPreset = null;
+            }
+			RebuildPresetsContainer();
+			SettingsContainer.SaveSettings();
+        }
+    }
 }
